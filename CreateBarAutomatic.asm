@@ -52,6 +52,12 @@ M=D
     D=A
     @2 //Dato por columna a dibujar
     M=D
+    @250
+    D=A
+    @7
+    M=D
+    @TIMER
+    0;JMP
 
 (LOOP)//49
     @KBD
@@ -164,4 +170,13 @@ M=D
     @6 //Dato por columna a borrar
     M=1
     @BAR
+    0;JMP
+
+(TIMER)
+    @7
+    M=M-1
+    D=M
+    @LOOP
+    D;JEQ
+    @TIMER
     0;JMP
