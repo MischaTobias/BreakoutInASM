@@ -93,44 +93,44 @@ M=D
 
 (LEFT) //81
 //BORRAR LAS 3 DE LA DERECHA Y AGREGAR 3 A LA IZQUIERDA, VERIFICAR QUE SEA MENOR A 32 (De esa línea en específico) PARA QUE SE QUEDE EN LA MISMA LÍNEA
-    @24385
+    @24384
     D=A
     @0
     D=D-M
     @LOOP
     D;JEQ
-    @3
+    @5
     D=A
     @4
     M=M+D
     //Mover a la izquierda la posición
     @0
-    M=M-D
+    M=M-1
     //Valores para borrar
+    @3
+    D=A
     @5
-    M=D
-    @6
     M=D
     @BARERASE
     0;JMP
 
 (RIGHT) //93
 //BORRAR LAS 3 DE LA IZQUIERDA Y AGREGAR 3 A LA DERECHA, VERIFICAR QUE SEA MAYOR A 32 (De esa línea en específico) PARA QUE SE QUEDE EN LA MISMA LÍNEA
-    @24409
+    @24410
     D=A
     @0
     D=D-M
     @LOOP
     D;JEQ
-    @3
-    D=A
     //Mover a la derecha la posición
     @0
-    M=M+D
+    M=M+1
     //Valores para borrar
-    @5
-    M=D
     @6
+    M=1
+    @3
+    D=A
+    @5
     M=D
     @BARERASE
     0;JMP
@@ -141,24 +141,17 @@ M=D
     M=0
     @4 //Dirección guía barra
     M=M+1
-    @6 //Dato por columna a borrar
-    M=M-1
-    D=M
     @NEXTERASE
-    D;JEQ
-    @BARERASE
     0;JMP
 
 (NEXTERASE) //117
-    @29 // 32-3
+    @31 // 32-1
     D=A
     @4 //Dirección guía barra
     M=M+D
-    @3
-    D=A
-    @6 //Dato por columna a dibujar
-    M=D
-    @5 //Dato por línea a dibujar
+    @6 //Dato por columna a borrar
+    M=1
+    @5 //Dato por línea a borrar
     M=M-1
     D=M
     @BARERASE
@@ -169,6 +162,6 @@ M=D
     @5 //Dato por línea a borrar
     M=D
     @6 //Dato por columna a borrar
-    M=D
+    M=1
     @BAR
     0;JMP
