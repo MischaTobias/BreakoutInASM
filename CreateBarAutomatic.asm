@@ -1,23 +1,23 @@
 @24397
 D=A
-@0 //Dirección guía barra
+@0 // Bar address
 M=D
 @3
 D=A
-@1 //Dato por línea a dibujar
+@1 // Row drawing
 M=D
 @6
 D=A
-@2 //Dato por columna a dibujar
+@2 // Column Drawing
 M=D
 
 (BAR) //12
-    @0 //Dirección guía barra
+    @0 // Bar address
     A=M
     M=-1
-    @0 //Dirección guía barra
+    @0 // Bar address
     M=M+1
-    @2 //Dato por columna a dibujar
+    @2 // Column Drawing
     M=M-1
     D=M
     @NEXT
@@ -25,36 +25,37 @@ M=D
     @BAR
     0;JMP
 
-(NEXT)//24  //Reiniciar datos para creación de siguiente línea
+(NEXT)//24  // Value resetting for next bar row.
     @26 // 32-6
     D=A
-    @0 //Dirección guía barra
+    @0 // Bar address
     M=M+D
     @6
     D=A
-    @2 //Dato por columna a dibujar
+    @2 // Column Drawing
     M=D
-    @1 //Dato por línea a dibujar
+    @1 // Row drawing
     M=M-1
     D=M
     @BAR
-    D;JGT // Finalización del loop
-    @96 //32+32+32
+    D;JGT // Loop ending
+    @96 // 32 + 32 + 32
     D=A
-    @0 //Dirección guía barra
+    @0 // Bar address
     M=M-D
-    // Restablecimiento de valores para creación de barra
+    // Value resetting for next bar drawing.
     @3 //41
     D=A
-    @1 //Dato por línea a dibujar
+    @1 // Row drawing
     M=D
     @6
     D=A
-    @2 //Dato por columna a dibujar
+    @2 // Column Drawing
     M=D
-    @250
+    //TIMER
+    @10
     D=A
-    @7
+    @6
     M=D
     @TIMER
     0;JMP
@@ -68,8 +69,8 @@ M=D
     0;JMP
 
 (PRESSED)
-    //130 izquierda
-    //132 derecha
+    //130 left
+    //132 right
     @KBD //55
     D=M
     @3
@@ -78,7 +79,6 @@ M=D
     D=A
     @3
     M=M-D
-    D=M
     @0
     D=M
     @4
@@ -87,7 +87,7 @@ M=D
     D=M
     @LEFT
     D;JEQ
-    @2 //Dato por columna a dibujar
+    @2 // Column Drawing
     D=A
     @3
     M=M-D
@@ -98,21 +98,23 @@ M=D
     0;JMP
 
 (LEFT) //81
-//BORRAR LAS 3 DE LA DERECHA Y AGREGAR 3 A LA IZQUIERDA, VERIFICAR QUE SEA MENOR A 32 (De esa línea en específico) PARA QUE SE QUEDE EN LA MISMA LÍNEA
+//Erase 3 columns to the right and add 3 to the left. Check row limits.
+    //
     @24384
     D=A
     @0
     D=D-M
     @LOOP
     D;JEQ
+    // Erasing position
     @5
     D=A
     @4
     M=M+D
-    //Mover a la izquierda la posición
+    // Moving position to the left
     @0
     M=M-1
-    //Valores para borrar
+    // Values for erasing
     @3
     D=A
     @5
@@ -121,19 +123,17 @@ M=D
     0;JMP
 
 (RIGHT) //93
-//BORRAR LAS 3 DE LA IZQUIERDA Y AGREGAR 3 A LA DERECHA, VERIFICAR QUE SEA MAYOR A 32 (De esa línea en específico) PARA QUE SE QUEDE EN LA MISMA LÍNEA
+//Erase 3 columns to the left and add 3 to the right. Check row limits.
     @24410
     D=A
     @0
     D=D-M
     @LOOP
     D;JEQ
-    //Mover a la derecha la posición
+    // Moving position to the right
     @0
     M=M+1
-    //Valores para borrar
-    @6
-    M=1
+    // Values for erasing
     @3
     D=A
     @5
@@ -142,38 +142,32 @@ M=D
     0;JMP
 
 (BARERASE) //105
-    @4 //Dirección guía barra
+    @4 // Bar address
     A=M
     M=0
-    @4 //Dirección guía barra
-    M=M+1
     @NEXTERASE
     0;JMP
 
 (NEXTERASE) //117
-    @31 // 32-1
+    @32
     D=A
-    @4 //Dirección guía barra
+    @4 // Bar address
     M=M+D
-    @6 //Dato por columna a borrar
-    M=1
-    @5 //Dato por línea a borrar
+    @5 // Row for erasing
     M=M-1
     D=M
     @BARERASE
-    D;JGT // Finalización del loop
-    // Restablecimiento de valores para borrar la barra
+    D;JGT // Loop ending
+    // Resetting values for next bar erase.
     @3
     D=A
-    @5 //Dato por línea a borrar
+    @5 // Row for erasing
     M=D
-    @6 //Dato por columna a borrar
-    M=1
     @BAR
     0;JMP
 
 (TIMER)
-    @7
+    @6
     M=M-1
     D=M
     @LOOP
