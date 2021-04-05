@@ -354,7 +354,7 @@ M=-1
     @7
     D=D-M
     @END
-    D;JGT
+    D;JLT
     @512
     D=A
     @7
